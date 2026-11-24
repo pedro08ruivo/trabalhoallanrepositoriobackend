@@ -1,5 +1,9 @@
 # Trabalho Integrador – Sistema de Biblioteca com JWT e Refresh Token
 
+## Vídeo de demonstração
+
+**[▶ Assistir ao vídeo no YouTube](https://youtu.be/NTQZEUHGwF4)**
+
 26/10/2026 · Projetos de exemplo: [jwt-api (back-end)](https://github.com/ADS-Unipar/jwt-api) e [jwt-app (front-end)](https://github.com/ADS-Unipar/jwt-app)
 
 ## 1. Objetivo
