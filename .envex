@@ -1,0 +1,7 @@
+JWT_SECRET=replace-with-a-long-random-secret-before-use
+JWT_REFRESH_SECRET=use-a-different-long-random-secret-here
+PORT=3000
+ADMIN_NAME=Administrador
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@biblioteca.com
+ADMIN_PASSWORD=troque-esta-senha-segura

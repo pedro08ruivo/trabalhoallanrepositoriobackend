@@ -1,0 +1,74 @@
+{
+  "info": {
+    "name": "JWT Biblioteca API",
+    "description": "Coleção mínima para autenticação, CRUD e empréstimos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/v1" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/auth/login","host":["{{baseUrl}}"],"path":["auth","login"]}, "body": {"mode":"raw","raw":"{\n  \"email\": \"admin@biblioteca.com\",\n  \"password\": \"123456\"\n}"} }
+        },
+        {
+          "name": "Refresh",
+          "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/auth/refresh","host":["{{baseUrl}}"],"path":["auth","refresh"]}, "body": {"mode":"raw","raw":"{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"} }
+        },
+        {
+          "name": "Me",
+          "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/auth/me","host":["{{baseUrl}}"],"path":["auth","me"]} }
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/categories","host":["{{baseUrl}}"],"path":["categories"]} } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/categories","host":["{{baseUrl}}"],"path":["categories"]}, "body": {"mode":"raw","raw":"{\n  \"name\": \"Ficção\",\n  \"description\": \"Livros de ficção\"\n}"} } }
+      ]
+    },
+    {
+      "name": "Autores",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/authors","host":["{{baseUrl}}"],"path":["authors"]} } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/authors","host":["{{baseUrl}}"],"path":["authors"]}, "body": {"mode":"raw","raw":"{\n  \"name\": \"Machado de Assis\",\n  \"nationality\": \"Brasileira\"\n}"} } }
+      ]
+    },
+    {
+      "name": "Livros",
+      "item": [
+        { "name": "Listar e filtrar", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/books?title=&categoryId=&authorId=&available=true","host":["{{baseUrl}}"],"path":["books"],"query":[{"key":"title","value":""},{"key":"categoryId","value":""},{"key":"authorId","value":""},{"key":"available","value":"true"}]} } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/books","host":["{{baseUrl}}"],"path":["books"]}, "body": {"mode":"raw","raw":"{\n  \"title\": \"Dom Casmurro\",\n  \"isbn\": \"978-0000000001\",\n  \"year\": 1899,\n  \"totalCopies\": 2,\n  \"categoryId\": 1,\n  \"authorIds\": [1]\n}"} } }
+      ]
+    },
+    {
+      "name": "Leitores",
+      "item": [
+        { "name": "Criar", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/readers","host":["{{baseUrl}}"],"path":["readers"]}, "body": {"mode":"raw","raw":"{\n  \"name\": \"João Silva\",\n  \"cpf\": \"12345678900\",\n  \"email\": \"joao@example.com\",\n  \"phone\": \"44999999999\"\n}"} } },
+        { "name": "Histórico", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/readers/1/loans","host":["{{baseUrl}}"],"path":["readers","1","loans"]} } }
+      ]
+    },
+    {
+      "name": "Empréstimos",
+      "item": [
+        { "name": "Criar", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/loans","host":["{{baseUrl}}"],"path":["loans"]}, "body": {"mode":"raw","raw":"{\n  \"bookId\": 1,\n  \"readerId\": 1\n}"} } },
+        { "name": "Listar por status", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/loans?status=ATIVO","host":["{{baseUrl}}"],"path":["loans"],"query":[{"key":"status","value":"ATIVO"}]} } },
+        { "name": "Devolver", "request": { "method": "PATCH", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/loans/1/return","host":["{{baseUrl}}"],"path":["loans","1","return"]} } }
+      ]
+    },
+    {
+      "name": "Administrativo",
+      "item": [
+        { "name": "Criar atendente", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": {"raw":"{{baseUrl}}/user","host":["{{baseUrl}}"],"path":["user"]}, "body": {"mode":"raw","raw":"{\n  \"name\": \"Atendente\",\n  \"username\": \"atendente\",\n  \"email\": \"atendente@biblioteca.com\",\n  \"password\": \"123456\",\n  \"isAdmin\": false,\n  \"active\": true\n}"} } },
+        { "name": "Dashboard relatório", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": {"raw":"{{baseUrl}}/reports/dashboard","host":["{{baseUrl}}"],"path":["reports","dashboard"]} } }
+      ]
+    }
+  ]
+}
